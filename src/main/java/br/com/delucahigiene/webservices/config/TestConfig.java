@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Profile;
 
 import br.com.delucahigiene.webservices.entities.Order;
 import br.com.delucahigiene.webservices.entities.User;
+import br.com.delucahigiene.webservices.entities.enums.OrderStatus;
 import br.com.delucahigiene.webservices.repositories.OrderRepository;
 import br.com.delucahigiene.webservices.repositories.UserRepository;
 
@@ -29,9 +30,9 @@ public class TestConfig implements CommandLineRunner {
 		User u2 = new User(null,"Joana da Silva", "joana@gmail.com","99999988","123456");
 		User u3 = new User(null,"Felix da Silva", "felix@gmail.com","96999988","123456");
 		
-		Order o1 = new Order(null, Instant.parse("2020-06-25T20:54:07Z"), u1);
-		Order o2 = new Order(null, Instant.parse("2019-07-21T03:42:10Z"), u2);
-		Order o3 = new Order(null, Instant.parse("2021-07-22T14:21:22Z"), u3);
+		Order o1 = new Order(null, Instant.parse("2020-06-25T20:54:07Z"), OrderStatus.DELIVERED, u1);
+		Order o2 = new Order(null, Instant.parse("2019-07-21T03:42:10Z"), OrderStatus.PACKING, u2);
+		Order o3 = new Order(null, Instant.parse("2021-07-22T14:21:22Z"), OrderStatus.WAITING_PAYMENT, u3);
 		
 		userRepository.saveAll(Arrays.asList(u1,u2,u3));
 		orderRepository.saveAll(Arrays.asList(o1,o2,o3));
