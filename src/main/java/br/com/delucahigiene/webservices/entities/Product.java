@@ -1,6 +1,5 @@
 package br.com.delucahigiene.webservices.entities;
 
-
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,30 +12,46 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name ="tb_category")
-public class Category implements Serializable{
-	
-	
+@Table(name = "tb_product")
+public class Product implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
+	private String description;
+	private Double price;
+	private String imgUrl;
 	
+	//transien evita que o JPA interprete esse collection
 	@Transient
-	private Set<Product> products = new HashSet<>();
+	private Set<Category> categories = new HashSet<>();
 	
-	
-	public Category () {
+	public Product() {
 		
 	}
 	
-	public Category(Long id, String name) {
+		
+	//Não se usa categorias dentro do construtor, ele é instãnciado fora do construtor
+	public Product(Long id, String name, String description, Double price, String imgUrl) {
 		super();
-		this.id=id;
-		this.name=name;
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.imgUrl = imgUrl;
 	}
+
+
+
+
+	// Para as classes collections somente os métodos getters (não usar os setters)
+	public Set<Category> getCategories() {
+		return categories;
+	}
+
 
 	public Long getId() {
 		return id;
@@ -53,10 +68,31 @@ public class Category implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	public Set<Product> getProducts() {
-		return products;
+
+	public String getDescription() {
+		return description;
 	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
+	}
+
 
 	@Override
 	public int hashCode() {
@@ -66,6 +102,7 @@ public class Category implements Serializable{
 		return result;
 	}
 
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -74,18 +111,14 @@ public class Category implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Category other = (Category) obj;
+		Product other = (Product) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}	
-	
-	
-	
-	
+	}
 	
 	
 
